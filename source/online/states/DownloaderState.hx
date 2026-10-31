@@ -856,7 +856,7 @@ class ModItem extends FlxSpriteGroup {
 				});
 			}
 
-			http.request();
+			try http.request() catch (e) http.onError(Std.string(e));
 		});
 	}
 }

@@ -46,7 +46,6 @@
 	<android target-sdk-version="33" if="android"/>
 	<android permission="android.permission.VIBRATE" if="android"/>
 	<java path="art/android/java" if="android"/>
-	<template path="art/android/template" if="android"/>
 	<android extension="boo.sniro.psychonline.BackGesture" if="android"/>
 
 	<!--Switch-specific-->
@@ -126,7 +125,6 @@
 		<haxelib version="git" url="https://github.com/Snirozu/grig.audio" ref="162f924bdde427fc84af5b51961d2faef51f6955" name="grig.audio"/>
 		<haxelib version="2.1.1" name="tink_core"/>
 		<haxelib version="git" url="https://github.com/Snirozu/yagp" ref="master" name="yagp"/>
-    <haxelib version="git" url="https://github.com/LimeExtensions/extension-androidtools" name="extension-androidtools" if="android"/>
 		<haxelib version="git" url="https://github.com/FunkinCrew/funkVis" ref="1966f8fbbbc509ed90d4b520f3c49c084fc92fd6" name="funkin.vis"/>
 		<haxelib version="1.3.1" name="feathersui"/>
 		<haxelib version="0.0.12" name="grig.midi"/>
@@ -284,4 +282,5 @@
 	<icon path="art/iconOG.png"/>
 
 	<assets rename="README_PLEASE.txt" path="art/README_LINUX.txt" if="linux"/>
+	<template path="art/android/template" if="android"/>
 </project>

@@ -2,6 +2,7 @@ package backend.mobile;
 
 import flixel.FlxState;
 import flixel.input.IFlxInputManager;
+import flixel.input.keyboard.FlxKey;
 #if FLX_TOUCH
 import flixel.input.touch.FlxTouch;
 #end
@@ -33,6 +34,9 @@ class MobileUtil implements IFlxInputManager
 	static final NO_MENU_TOUCH:Array<String> = ['states.PlayState', 'states.editors.'];
 	static final NO_TAP_ACCEPT:Array<String> = ['online.', 'states.TitleState', 'options.NoteOffsetState', 'options.NotesSubState'];
 
+	public static var backPressed(default, null):Bool = false;
+
+	static var escapeHeld:Bool = false;
 	static var bindings:Array<{button:TouchButton, key:String, consumeMouse:Bool}> = [];
 	static var pulses:Map<String, Int> = [];
 	static var lastPulses:Map<String, Int> = [];
@@ -45,6 +49,13 @@ class MobileUtil implements IFlxInputManager
 		FlxG.signals.preStateSwitch.add(() -> bindings = []);
 		#if mobile
 		initScreen();
+		#end
+		#if android
+		var window = lime.app.Application.current.window;
+		window.onKeyUp.add((key, _) -> {
+			if (key == lime.ui.KeyCode.APP_CONTROL_BACK)
+				window.onKeyUp.cancel();
+		}, false, -1000);
 		#end
 	}
 
@@ -163,11 +174,21 @@ class MobileUtil implements IFlxInputManager
 			@:privateAccess FlxG.mouse._leftButton.reset();
 		#end
 
+		backPressed = false;
 		#if android
+		var escape = @:privateAccess FlxG.keys.getKey(FlxKey.ESCAPE);
+		if (escapeHeld)
+		{
+			escape.release();
+			escapeHeld = false;
+		}
 		if (FlxG.android.justReleased.BACK)
 		{
+			backPressed = true;
 			pulse('back');
 			pulse('pause');
+			escape.press();
+			escapeHeld = true;
 		}
 		#end
 

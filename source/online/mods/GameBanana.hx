@@ -32,7 +32,7 @@ class GameBanana {
 				});
 			}
 
-			http.request();
+			try http.request() catch (e) http.onError(Std.string(e));
 		});
 	}
 
@@ -62,7 +62,7 @@ class GameBanana {
 				});
 			}
 
-			http.request();
+			try http.request() catch (e) http.onError(Std.string(e));
 		});
 	}
 
@@ -92,7 +92,7 @@ class GameBanana {
 				});
 			}
 
-			http.request();
+			try http.request() catch (e) http.onError(Std.string(e));
 		});
 	}
 
@@ -147,7 +147,7 @@ class GameBanana {
 				response(null, error);
 			}
 
-			http.request();
+			try http.request() catch (e) http.onError(Std.string(e));
 		};
 		if (threaded)
 			Thread.run(func);
@@ -179,7 +179,7 @@ class GameBanana {
 				});
 			}
 
-			http.request();
+			try http.request() catch (e) http.onError(Std.string(e));
 		});
 	}
 

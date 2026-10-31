@@ -31,10 +31,17 @@ class LeavePie extends FlxTypedSpriteGroup<FlxSprite> {
 		exitTip.x = pieDial.x - exitTip.width - 10;
     }
 
+	var chatWasFocused:Bool = false;
+
     override function update(elapsed) {
         super.update(elapsed);
 
-		if (getState().controls.pressed('back') && !ChatBox.instance.focused) {
+		var instantLeave = backend.mobile.MobileUtil.backPressed && !chatWasFocused;
+		chatWasFocused = ChatBox.instance.focused;
+		if (instantLeave)
+			pieDial.amount = 1;
+
+		if ((instantLeave || getState().controls.pressed('back')) && !ChatBox.instance.focused) {
 			exitTip.alpha = 1;
 			pieDial.amount += elapsed * 2;
 			pieDial.visible = true;
