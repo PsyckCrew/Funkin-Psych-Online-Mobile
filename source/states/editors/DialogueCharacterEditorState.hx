@@ -14,7 +14,7 @@ import openfl.net.FileFilter;
 import tjson.TJSON as Json;
 import lime.system.Clipboard;
 #if sys
-import sys.io.File;
+import backend.io.File;
 #end
 
 import objects.TypedAlphabet;

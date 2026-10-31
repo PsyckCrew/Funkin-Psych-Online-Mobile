@@ -4,7 +4,7 @@ import online.s3d.View3DHandler;
 import online.GameClient;
 import online.util.ShitUtil;
 import online.substates.PostTextSubstate;
-import sys.io.File;
+import backend.io.File;
 import online.network.Leaderboard;
 import haxe.Json;
 import backend.WeekData;

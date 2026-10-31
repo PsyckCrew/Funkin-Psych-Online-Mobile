@@ -2,8 +2,8 @@ package online.backend;
 
 #if HSCRIPT_ALLOWED
 import hscript.Interp;
-import sys.io.File;
-import sys.FileSystem;
+import backend.io.File;
+import backend.io.FileSystem;
 
 class SyncScript extends psychlua.PScript {
 	public static var syncScript:SyncScript;

@@ -12,6 +12,39 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			'bool'); //Variable type
 		addOption(option);
 
+		var option:Option = new Option('Mobile Controls',
+			'If checked, on-screen touch controls are shown:
+a hitbox while playing and a virtual pad in menus.',
+			'mobileControls',
+			'bool');
+		addOption(option);
+
+		var option:Option = new Option('Hitbox Style:',
+			'Classic: full-height lanes over the whole screen.
+V-Slice: a row of big arrow buttons at the bottom.',
+			'hitboxStyle',
+			'string',
+			['Classic', 'V-Slice']);
+		addOption(option);
+
+		var option:Option = new Option('Vibration:',
+			'Vibrate the phone when you miss a note, hit a note, or both.',
+			'vibration',
+			'string',
+			['Off', 'On Miss', 'On Note Hit', 'Both']);
+		addOption(option);
+
+		var option:Option = new Option('Vibration Strength',
+			'How strong the vibration is. Long notes vibrate at half of it.',
+			'vibrationStrength',
+			'percent');
+		option.scrollSpeed = 1.6;
+		option.minValue = 0.1;
+		option.maxValue = 1;
+		option.changeValue = 0.1;
+		option.decimals = 1;
+		addOption(option);
+
 		var option:Option = new Option('Middlescroll',
 			'If checked, your notes get centered.',
 			'middleScroll',

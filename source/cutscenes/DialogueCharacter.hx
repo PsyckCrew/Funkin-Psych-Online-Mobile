@@ -3,8 +3,8 @@ package cutscenes;
 import tjson.TJSON as Json;
 
 #if sys
-import sys.FileSystem;
-import sys.io.File;
+import backend.io.FileSystem;
+import backend.io.File;
 #end
 import lime.utils.Assets;
 

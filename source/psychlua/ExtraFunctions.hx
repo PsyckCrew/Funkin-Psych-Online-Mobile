@@ -1,8 +1,8 @@
 package psychlua;
 
 #if sys
-import sys.FileSystem;
-import sys.io.File;
+import backend.io.FileSystem;
+import backend.io.File;
 #end
 
 import flixel.util.FlxSave;

@@ -21,8 +21,8 @@ import states.StoryMenuState;
 import states.MainMenuState;
 
 #if MODS_ALLOWED
-import sys.FileSystem;
-import sys.io.File;
+import backend.io.FileSystem;
+import backend.io.File;
 #end
 
 typedef TitleData =

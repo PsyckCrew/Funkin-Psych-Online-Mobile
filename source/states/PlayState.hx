@@ -76,8 +76,8 @@ import openfl.filters.ShaderFilter;
 #end
 
 #if sys
-import sys.FileSystem;
-import sys.io.File;
+import backend.io.FileSystem;
+import backend.io.File;
 #end
 
 #if VIDEOS_ALLOWED 
@@ -106,6 +106,9 @@ import hscript.Interp;
 #end
 
 import online.backend.schema.Player;
+import backend.mobile.Hitbox;
+import backend.mobile.MobileUtil;
+import backend.mobile.PauseButton;
 
 @:build(online.backend.Macros.getSetForwarder())
 // @:build(online.backend.MonitorMacro.build())
@@ -482,6 +485,13 @@ class PlayState extends MusicBeatState
 
 	// Less laggy controls
 	public var keysArray:Array<String>;
+	public var hitbox:Hitbox;
+	public var mobilePause:PauseButton;
+
+	public static var vsliceLayout(default, null):Bool = false;
+
+	public static function isDownScroll():Bool
+		return vsliceLayout || ClientPrefs.data.downScroll;
 
 	public var precacheList:Map<String, String> = new Map<String, String>();
 	public var songName:String;
@@ -576,6 +586,7 @@ class PlayState extends MusicBeatState
 
 	override public function create()
 	{
+		vsliceLayout = MobileUtil.enabled && ClientPrefs.data.hitboxStyle == 'V-Slice';
 		modchartTweens = new ProxyMap(variables,  FlxTween, 'tween_');
 		modchartSprites = new ProxyMap(variables, FlxSprite);
 		modchartTimers = new ProxyMap(variables,  FlxTimer, 'timer_');
@@ -1203,14 +1214,14 @@ class PlayState extends MusicBeatState
 
 		preloadTasks.push(() -> {
 			Conductor.songPosition = -5000 / Conductor.songPosition;
-			showTime = (ClientPrefs.data.timeBarType != 'Disabled');
+			showTime = (ClientPrefs.data.timeBarType != 'Disabled') && !vsliceLayout;
 			timeTxt = new OptimizedFlxText(0, 10, FlxG.width, "", 32);
 			timeTxt.setFormat(!isPixelStage ? Paths.font("vcr.ttf") : 'Pixel Arial 11 Bold', !isPixelStage ? 32 : 28, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 			timeTxt.scrollFactor.set();
 			timeTxt.alpha = 0;
 			timeTxt.borderSize = 2;
 			timeTxt.visible = updateTime = showTime;
-			if(ClientPrefs.data.downScroll) timeTxt.y = FlxG.height - 44;
+			if(isDownScroll()) timeTxt.y = FlxG.height - 44;
 			if(ClientPrefs.data.timeBarType == 'Song Name') timeTxt.text = SONG.song;
 		});
 
@@ -1285,7 +1296,7 @@ class PlayState extends MusicBeatState
 		});
 
 		preloadTasks.push(() -> {
-			healthBar = new HealthBar(0, FlxG.height * (!ClientPrefs.data.downScroll ? 0.89 : 0.11), 'healthBar', function() return health, 0, 2);
+			healthBar = new HealthBar(0, FlxG.height * (!isDownScroll() ? 0.89 : 0.11), 'healthBar', function() return health, 0, 2);
 			healthBar.screenCenter(X);
 			healthBar.leftToRight = false;
 			healthBar.scrollFactor.set();
@@ -1302,7 +1313,7 @@ class PlayState extends MusicBeatState
 		});
 
 		preloadTasks.push(() -> {
-			scoreTxtOriginY = ClientPrefs.data.downScroll ? 120 : 700;
+			scoreTxtOriginY = isDownScroll() ? 120 : 700;
 
 			scoreTxt = new OptimizedFlxText(0, healthBar.y + 40, FlxG.width, "", 20);
 			scoreTxt.setFormat(!isPixelStage ? Paths.font("vcr.ttf") : 'Pixel Arial 11 Bold', !isPixelStage ? 20 : 18, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -1364,7 +1375,7 @@ class PlayState extends MusicBeatState
 			botplayTxt.borderSize = 1.25;
 			showBotplay();
 			uiGroup.add(botplayTxt);
-			if (ClientPrefs.data.downScroll) {
+			if (isDownScroll()) {
 				botplayTxt.y = timeBar.y - 78;
 			}
 
@@ -1578,6 +1589,16 @@ class PlayState extends MusicBeatState
 				FlxG.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyPress);
 				FlxG.stage.addEventListener(KeyboardEvent.KEY_UP, onKeyRelease);
 
+				if (MobileUtil.enabled && !cpuControlled) {
+					hitbox = new Hitbox(keysArray);
+					hitbox.cameras = [camOther];
+					add(hitbox);
+
+					mobilePause = new PauseButton();
+					mobilePause.cameras = [camOther];
+					add(mobilePause);
+				}
+
 				if (!ClientPrefs.data.disableReplays && !isInvalidScore() && !chartingMode) {
 					add(replayRecorder = new ReplayRecorder(this));
 				}
@@ -1589,7 +1610,7 @@ class PlayState extends MusicBeatState
 				if (replayPlayer == null && ClientPrefs.data.midSongCommentsOpacity > 0.0) {
 					nicomments.cameras = [camGame];
 					nicomments.alpha = ClientPrefs.data.midSongCommentsOpacity;
-					nicomments.offsetY = !ClientPrefs.data.downScroll ? 150 : 0;
+					nicomments.offsetY = !isDownScroll() ? 150 : 0;
 				}
 				add(nicomments);
 			}
@@ -2179,6 +2200,8 @@ class PlayState extends MusicBeatState
 
 		generateStaticArrows(0);
 		generateStaticArrows(1);
+		if (vsliceLayout)
+			applyVSliceLayout();
 		for (i in 0...playerStrums.length) {
 			setOnScripts('defaultPlayerStrumX' + i, playerStrums.members[i].x);
 			setOnScripts('defaultPlayerStrumY' + i, playerStrums.members[i].y);
@@ -2786,7 +2809,7 @@ class PlayState extends MusicBeatState
 							oldNote.updateHitbox();
 						}
 
-						if(ClientPrefs.data.downScroll)
+						if(isDownScroll())
 							sustainNote.correctionOffset = 0;
 					}
 					else if(oldNote.isSustainNote)
@@ -3009,6 +3032,23 @@ class PlayState extends MusicBeatState
 	}
 
 	public var skipArrowStartTween:Bool = false; //for lua
+	static final VSLICE_PLAYER_X:Array<Float> = [242, 435, 733, 925];
+
+	function applyVSliceLayout()
+	{
+		var mine = getPlayerStrums();
+		if (mine.length == 4)
+			for (i => strum in mine.members)
+				strum.setPosition(VSLICE_PLAYER_X[i], 523);
+
+		for (i => strum in getOpponentStrums().members) {
+			strum.scale.scale(0.4);
+			strum.updateHitbox();
+			strum.setPosition(24 + i * 47, 16);
+			strum.downScroll = false;
+		}
+	}
+
 	private function generateStaticArrows(player:Int):Void
 	{
 		var strumWidth = Note.maniaKeys * Note.swagScaledWidth - (Note.getNoteOffsetX() * (Note.maniaKeys - 1));
@@ -3022,7 +3062,7 @@ class PlayState extends MusicBeatState
 			strumLineX += FlxG.width / 2 * (player == 0 ? 0 : 1);
 		}
 
-		var strumLineY:Float = ClientPrefs.data.downScroll ? (FlxG.height - 150) : 50;
+		var strumLineY:Float = isDownScroll() ? (FlxG.height - 150) : 50;
 		var strumGroup = player == 1 ? playerStrums : opponentStrums;
 		for (i in 0...Note.maniaKeys)
 		{
@@ -3037,7 +3077,7 @@ class PlayState extends MusicBeatState
 
 			var babyArrow:StrumNote = new StrumNote(strumLineX, strumLineY, i, player);
 			babyArrow.noModchart = (ClientPrefs.data.opponentStrums ? true : strumGroup == getPlayerStrums()) && noModchart;
-			babyArrow.downScroll = ClientPrefs.data.downScroll;
+			babyArrow.downScroll = isDownScroll();
 			if (!isStoryMode && !skipArrowStartTween)
 			{
 				//babyArrow.y -= 10;
@@ -3116,7 +3156,16 @@ class PlayState extends MusicBeatState
 			}
 		}
 
+		setMobileUtilVisible(false);
 		super.openSubState(SubState);
+	}
+
+	function setMobileUtilVisible(visible:Bool)
+	{
+		if (hitbox != null)
+			hitbox.visible = visible;
+		if (mobilePause != null)
+			mobilePause.visible = visible;
 	}
 
 	override function closeSubState()
@@ -3131,6 +3180,7 @@ class PlayState extends MusicBeatState
 		}
 
 		super.closeSubState();
+		setMobileUtilVisible(true);
 
 		effectMusic(FlxG.sound.music, true);
 		effectMusic(vocals, true);
@@ -3569,6 +3619,8 @@ class PlayState extends MusicBeatState
 							}
 								
 							daNote.followStrumNote(strum, fakeCrochet, songSpeed / playbackRate);
+							if (vsliceLayout && !isPlayerNote(daNote))
+								daNote.visible = false;
 
 							if (GameClient.isConnected() && daNote.strumTime <= Conductor.songPosition) {
 								camZooming = true;
@@ -5264,8 +5316,8 @@ class PlayState extends MusicBeatState
 					numScore.loadGraphic(Paths.image(uiPrefix + 'num' + Std.int(i) + uiSuffix));
 					numScore.cameras = [camHUD];
 					numScore.screenCenter();
-					numScore.x = placement[0] + (43 * daLoop) - 90 + getComboOffset(playsAsBF())[2];
-					numScore.y += placement[1] + 80 - getComboOffset(playsAsBF())[3];
+					numScore.x = placement[0] + ((vsliceLayout ? 52 : 43) * daLoop) - 90 + getComboOffset(playsAsBF())[2];
+					numScore.y += placement[1] + (vsliceLayout ? 100 : 80) - getComboOffset(playsAsBF())[3];
 					
 					if (!ClientPrefs.data.comboStacking)
 						lastScore.push(numScore);
@@ -5472,6 +5524,11 @@ class PlayState extends MusicBeatState
 				if(pressArray[i] && strumsBlocked[i] != true)
 					keyPressed(i);
 
+		if (hitbox != null && !controls.controllerMode)
+			for (i in 0...keysArray.length)
+				if (strumsBlocked[i] != true && MobileUtil.justPressed(keysArray[i]))
+					keyPressed(i);
+
 		if (startedCountdown && !self.stunned && generatedMusic)
 		{
 			// rewritten inputs???
@@ -5515,6 +5572,11 @@ class PlayState extends MusicBeatState
 			for (i in 0...releaseArray.length)
 				if(releaseArray[i] || strumsBlocked[i] == true)
 					keyReleased(i);
+
+		if (hitbox != null && !controls.controllerMode)
+			for (i in 0...keysArray.length)
+				if (MobileUtil.justReleased(keysArray[i]))
+					keyReleased(i);
 	}
 
 	function noteMiss(daNote:Note):Void { //You didn't hit the key and let it go offscreen, also used by Hurt Notes
@@ -5551,6 +5613,7 @@ class PlayState extends MusicBeatState
 	{
 		// am i the only one that kinda hears the rayman 3 selection sound there
 		FlxG.sound.play(Paths.soundRandom('missnote', 1, 3), 0.3);
+		MobileUtil.vibrate(MISS);
 
 		// score and data
 		var subtract:Float = 0.05;
@@ -5708,6 +5771,8 @@ class PlayState extends MusicBeatState
 		if(note.wasGoodHit || (cpuControlled && (note.ignoreNote || note.hitCausesMiss))) return;
 
 		note.wasGoodHit = true;
+		if (!note.hitCausesMiss)
+			MobileUtil.vibrate(note.isSustainNote ? HOLD : HIT);
 		if (ClientPrefs.data.hitsoundVolume > 0 && !note.hitsoundDisabled)
 			FlxG.sound.play(Paths.sound(note.hitsound), ClientPrefs.data.hitsoundVolume);
 
@@ -5831,6 +5896,9 @@ class PlayState extends MusicBeatState
 		if (ClientPrefs.data.holdSplashAlpha <= 0)
 			return;
 
+		if (vsliceLayout && note != null && !isPlayerNote(note))
+			return;
+
 		if (note != null) {
 			var strum:StrumNote = (note.mustPress ? playerStrums : opponentStrums).members[note.noteData];
 
@@ -5867,6 +5935,7 @@ class PlayState extends MusicBeatState
 	}
 
 	override function destroy() {
+		vsliceLayout = false;
 		#if LUA_ALLOWED
 		for (i in 0...luaArray.length) {
 			var lua:FunkinLua = luaArray[0];

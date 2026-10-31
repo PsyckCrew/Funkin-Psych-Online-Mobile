@@ -6,6 +6,7 @@ import flixel.input.gamepad.FlxGamepadButton;
 import flixel.input.gamepad.FlxGamepadInputID;
 import flixel.input.gamepad.mappings.FlxGamepadMapping;
 import flixel.input.keyboard.FlxKey;
+import backend.mobile.MobileUtil;
 
 class Controls
 {
@@ -103,6 +104,7 @@ class Controls
 
 		var result:Bool = (FlxG.keys.anyJustPressed(keyboardBinds[key]) == true);
 		
+		if (!result && MobileUtil.justPressed(key)) return true;
 		if (result) controllerMode = false;
 		else {
 			result = _myGamepadJustPressed(gamepadBinds[key]) == true || MidiControls.anyJustPressed(midiBinds[key]);
@@ -121,6 +123,7 @@ class Controls
 		}
 
 		var result:Bool = (FlxG.keys.anyPressed(keyboardBinds[key]) == true);
+		if (!result && MobileUtil.pressed(key)) return true;
 		if(result) controllerMode = false;
 		else {
 			result = _myGamepadPressed(gamepadBinds[key]) == true || MidiControls.anyPressed(midiBinds[key]);
@@ -139,6 +142,7 @@ class Controls
 		}
 
 		var result:Bool = (FlxG.keys.anyJustReleased(keyboardBinds[key]) == true);
+		if (!result && MobileUtil.justReleased(key)) return true;
 		if(result) controllerMode = false;
 		else {
 			result = _myGamepadJustReleased(gamepadBinds[key]) == true || MidiControls.anyJustReleased(midiBinds[key]);
@@ -150,6 +154,7 @@ class Controls
 	}
 
 	public var controllerMode:Bool = false;
+
 	private function _myGamepadJustPressed(keys:Array<FlxGamepadInputID>):Bool
 	{
 		if(keys != null)

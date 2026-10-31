@@ -3,8 +3,8 @@ package online.backend;
 import psychlua.FunkinLua;
 import sys.io.FileOutput;
 import sys.io.FileInput;
-import sys.FileSystem;
-import sys.io.File;
+import backend.io.FileSystem;
+import backend.io.File;
 import haxe.io.Path;
 
 class LuaModuleSwap {

@@ -4,7 +4,7 @@ import online.states.RoomState.LobbyCharacter;
 import flixel.util.FlxStringUtil;
 import backend.WeekData;
 import flixel.effects.FlxFlicker;
-import sys.FileSystem;
+import backend.io.FileSystem;
 import objects.Character;
 import openfl.Lib;
 

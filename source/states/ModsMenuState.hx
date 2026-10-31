@@ -18,8 +18,8 @@ import lime.utils.Assets;
 import tjson.TJSON as Json;
 
 #if sys
-import sys.io.File;
-import sys.FileSystem;
+import backend.io.File;
+import backend.io.FileSystem;
 #end
 
 import objects.AttachedSprite;

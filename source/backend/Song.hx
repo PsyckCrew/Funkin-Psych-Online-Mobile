@@ -5,8 +5,8 @@ import tjson.TJSON as Json;
 import lime.utils.Assets;
 
 #if sys
-import sys.io.File;
-import sys.FileSystem;
+import backend.io.File;
+import backend.io.FileSystem;
 #end
 
 import backend.Section;

@@ -1,8 +1,8 @@
 package objects;
 
 #if MODS_ALLOWED
-import sys.io.File;
-import sys.FileSystem;
+import backend.io.File;
+import backend.io.FileSystem;
 #end
 import openfl.utils.Assets;
 import tjson.TJSON as Json;

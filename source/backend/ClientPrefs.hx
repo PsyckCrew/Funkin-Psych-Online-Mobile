@@ -37,6 +37,10 @@ class SaveVariables {
 	public var shaders:Bool = #if mobile false #else true #end;
 	// public var cacheOnGPU:Bool = #if !switch false #else true #end;
 	public var framerate:Int = #if mobile 60 #else 120 #end;
+	public var mobileControls:Bool = #if mobile true #else false #end;
+	public var hitboxStyle:String = 'Classic';
+	public var vibration:String = 'Off';
+	public var vibrationStrength:Float = 1;
 	public var camZooms:Bool = true;
 	public var hideHud:Bool = false;
 	public var noteOffset:Int = 0;

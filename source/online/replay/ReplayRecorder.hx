@@ -7,12 +7,13 @@ import online.network.Leaderboard;
 import haxe.crypto.Md5;
 import backend.Song;
 import backend.Highscore;
-import sys.FileSystem;
+import backend.io.FileSystem;
 import haxe.Json;
-import sys.io.File;
+import backend.io.File;
 import flixel.input.gamepad.FlxGamepadInputID;
 import flixel.input.keyboard.FlxKey;
 import openfl.events.KeyboardEvent;
+import backend.mobile.MobileUtil;
 import flixel.FlxBasic;
 import backend.MidiControls;
 
@@ -184,6 +185,15 @@ class ReplayRecorder extends FlxBasic {
 							// nothing
 					}
 				}
+		}
+
+		if (MobileUtil.enabled) {
+			for (id in REGISTER_BINDS) {
+				if (MobileUtil.justPressed(id))
+					recordKey(Conductor.songPosition, [id], -1, 0, false);
+				else if (MobileUtil.justReleased(id))
+					recordKey(Conductor.songPosition, [id], -1, 1, false);
+			}
 		}
 
 		if (MidiControls.isActive) {

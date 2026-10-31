@@ -1,7 +1,7 @@
 package psychlua;
 
-import sys.io.File;
-import sys.FileSystem;
+import backend.io.File;
+import backend.io.FileSystem;
 import backend.WeekData;
 import objects.Character;
 import backend.StageData;

@@ -7,7 +7,7 @@ import flixel.util.FlxStringUtil;
 import states.stages.Spooky;
 import flixel.util.FlxAxes;
 import flixel.addons.display.FlxPieDial;
-import sys.FileSystem;
+import backend.io.FileSystem;
 import states.stages.Philly;
 import flixel.FlxSubState;
 import flixel.group.FlxGroup;

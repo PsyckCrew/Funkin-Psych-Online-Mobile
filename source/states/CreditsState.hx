@@ -1,8 +1,8 @@
 package states;
 
 #if MODS_ALLOWED
-import sys.FileSystem;
-import sys.io.File;
+import backend.io.FileSystem;
+import backend.io.File;
 #end
 
 import objects.AttachedSprite;
@@ -54,6 +54,8 @@ class CreditsState extends MusicBeatState
 			['Magniill', 'notmagniill', 'Redrew the Online Menu Button', 'https://twitter.com/magniill', '910000'],
 			['Vortex', 'vor', 'Code Contributor; notably: Multi-Atlas Support!', 'https://github.com/Vortex2Oblivion', '00FFFF'],
 			['xenkap', '', 'Code Contributor', 'https://github.com/xenkap', '9370DB'],
+			['mr_chaoss1', '', 'Mobile touch controls (TouchButton, touch helpers)
+ported from Freak Engine 0.7.7', '', 'F9393F'],
 			[''],
 			['Psych Engine Team'],
 			['Shadow Mario',		'shadowmario',		'Main Programmer of Psych Engine',								'https://twitter.com/Shadow_Mario_',	'444444'],

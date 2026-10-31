@@ -3,8 +3,8 @@ package backend;
 import openfl.utils.Assets;
 
 #if sys
-import sys.io.File;
-import sys.FileSystem;
+import backend.io.File;
+import backend.io.FileSystem;
 #end
 
 class NoteSkinData {

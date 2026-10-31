@@ -17,8 +17,8 @@ import openfl.display.BitmapData;
 import haxe.zip.Reader;
 import haxe.zip.Entry;
 import online.states.SetupModsState;
-import sys.io.File;
-import sys.FileSystem;
+import backend.io.File;
+import backend.io.FileSystem;
 import online.http.URLScraper;
 
 class OnlineMods {

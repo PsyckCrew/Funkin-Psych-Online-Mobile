@@ -22,13 +22,13 @@ import states.TitleState;
 import lime.graphics.Image;
 #end
 
-import sys.FileSystem;
+import backend.io.FileSystem;
 
 //crash handler stuff
 import openfl.events.UncaughtErrorEvent;
 import haxe.CallStack;
 import haxe.io.Path;
-import sys.io.File;
+import backend.io.File;
 import sys.io.Process;
 
 class FunkinFlxGame extends FlxGame {
@@ -90,6 +90,13 @@ class Main extends Sprite
         hscript.Config.IMPORT_BLACKLIST = online.backend.Deflection.classPathsBlacklist.copy();
 
 		// cpp.vm.Profiler.start("profiler.txt");
+		#if android
+		Sys.putEnv("SDL_ANDROID_TRAP_BACK_BUTTON", "1");
+		#end
+
+		#if mobile
+		Sys.setCwd(lime.system.System.applicationStorageDirectory);
+		#else
 		if (Path.normalize(Sys.getCwd()) != Path.normalize(lime.system.System.applicationDirectory)) {
 			Sys.setCwd(lime.system.System.applicationDirectory);
 
@@ -102,6 +109,7 @@ class Main extends Sprite
 				Sys.exit(1);
 			}
 		}
+		#end
 		
 		// Lib.current.addChild(view3D = new online.away.View3DHandler());
 		var alertSprite = new online.gui.Alert();
@@ -146,6 +154,7 @@ class Main extends Sprite
 		var stageWidth:Int = Lib.current.stage.stageWidth;
 		var stageHeight:Int = Lib.current.stage.stageHeight;
 
+		#if !mobile
 		if (game.zoom == -1.0)
 		{
 			var ratioX:Float = stageWidth / game.width;
@@ -154,6 +163,7 @@ class Main extends Sprite
 			game.width = Math.ceil(stageWidth / game.zoom);
 			game.height = Math.ceil(stageHeight / game.zoom);
 		}
+		#end
 
 		CoolUtil.setDarkMode(true);
 
@@ -316,6 +326,7 @@ class Main extends Sprite
 
 		FlxG.plugins.add(new online.backend.Waiter());
 		FlxG.plugins.add(@:privateAccess new backend.MidiControls());
+		backend.mobile.MobileUtil.init();
 
 		online.backend.Thread.repeat(() -> {
 			try {

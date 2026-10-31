@@ -3,8 +3,8 @@ package backend;
 import psychlua.ModchartSprite;
 import json2object.JsonParser;
 #if MODS_ALLOWED
-import sys.io.File;
-import sys.FileSystem;
+import backend.io.File;
+import backend.io.FileSystem;
 #else
 import openfl.utils.Assets;
 #end

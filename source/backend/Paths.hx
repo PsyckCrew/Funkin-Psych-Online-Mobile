@@ -22,8 +22,8 @@ import lime.utils.Assets;
 import openfl.media.Sound;
 
 #if sys
-import sys.io.File;
-import sys.FileSystem;
+import backend.io.File;
+import backend.io.FileSystem;
 #if linux
 import haxe.io.Path;
 #end

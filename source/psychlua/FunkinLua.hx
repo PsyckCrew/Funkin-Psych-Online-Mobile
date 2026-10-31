@@ -17,8 +17,8 @@ import flixel.addons.display.FlxRuntimeShader;
 #end
 
 #if sys
-import sys.FileSystem;
-import sys.io.File;
+import backend.io.FileSystem;
+import backend.io.File;
 #end
 
 import cutscenes.DialogueBoxPsych;
@@ -618,7 +618,7 @@ class FunkinLua {
 		set('gfName', PlayState.SONG.gfVersion);
 
 		// Some settings, no jokes
-		set('downscroll', ClientPrefs.data.downScroll);
+		set('downscroll', PlayState.isDownScroll());
 		set('middlescroll', ClientPrefs.data.middleScroll);
 		set('framerate', ClientPrefs.data.unlockFramerate ? 1000 : ClientPrefs.data.framerate);
 		set('ghostTapping', ClientPrefs.getGhostTapping());

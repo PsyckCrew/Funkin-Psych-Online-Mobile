@@ -9,8 +9,8 @@ import openfl.utils.Assets;
 import lime.utils.Assets as LimeAssets;
 
 #if sys
-import sys.io.File;
-import sys.FileSystem;
+import backend.io.File;
+import backend.io.FileSystem;
 #end
 
 class CoolUtil

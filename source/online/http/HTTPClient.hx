@@ -256,7 +256,7 @@ class HTTPClient {
 		}
 
 		if (socket != null) {
-			socket.close();
+			try socket.close() catch (_) {}
 			socket = null;
 		}
 
@@ -268,7 +268,7 @@ class HTTPClient {
 
 	public function close() {
 		if (socket != null) {
-			socket.close();
+			try socket.close() catch (_) {}
 			socket = null;
 		}
 		try {

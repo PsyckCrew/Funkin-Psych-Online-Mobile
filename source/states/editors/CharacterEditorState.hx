@@ -23,7 +23,7 @@ import objects.Character;
 import objects.HealthIcon;
 import objects.HealthBar;
 #if MODS_ALLOWED
-import sys.FileSystem;
+import backend.io.FileSystem;
 #end
 
 @:bitmap("assets/images/debugger/cursorCross.png")
@@ -1292,7 +1292,7 @@ class CharacterEditorState extends MusicBeatState {
 			if (FileSystem.exists(directory)) {
 				for (file in FileSystem.readDirectory(directory)) {
 					var path = haxe.io.Path.join([directory, file]);
-					if (!sys.FileSystem.isDirectory(path) && file.endsWith('.json')) {
+					if (!backend.io.FileSystem.isDirectory(path) && file.endsWith('.json')) {
 						var charToCheck:String = file.substr(0, file.length - 5);
 						if (!charsLoaded.exists(charToCheck)) {
 							characterList.push(charToCheck);

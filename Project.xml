@@ -43,6 +43,11 @@
 
 	<!--Mobile-specific-->
 	<window width="0" resizable="false" orientation="landscape" if="mobile" height="0" fullscreen="true"/>
+	<android target-sdk-version="33" if="android"/>
+	<android permission="android.permission.VIBRATE" if="android"/>
+	<java path="art/android/java" if="android"/>
+	<template path="art/android/template" if="android"/>
+	<android extension="boo.sniro.psychonline.BackGesture" if="android"/>
 
 	<!--Switch-specific-->
 	<window width="0" resizable="true" orientation="landscape" if="switch" height="0" fullscreen="true"/>
@@ -124,6 +129,17 @@
 		<haxelib version="git" url="https://github.com/FunkinCrew/funkVis" ref="1966f8fbbbc509ed90d4b520f3c49c084fc92fd6" name="funkin.vis"/>
 		<haxelib version="1.3.1" name="feathersui"/>
 		<haxelib version="0.0.12" name="grig.midi"/>
+		<haxelib version="0.0.3" name="grig.pitch"/>
+		<haxelib version="0.44.0" name="thx.core"/>
+		<haxelib version="0.5.0" name="tink_url"/>
+		<haxelib version="0.10.0" name="tink_http"/>
+		<haxelib version="0.9.0" name="tink_io"/>
+		<haxelib version="0.4.0" name="tink_streams"/>
+		<haxelib version="0.4.0" name="tink_chunk"/>
+		<haxelib version="1.4.0" name="http-status"/>
+		<haxelib version="0.7.0" name="tink_anon"/>
+		<haxelib version="1.0.4" name="tink_macro"/>
+		<haxelib version="0.6.0" name="tink_stringly"/>
 	</section>
 
 	<section if="VIDEOS_ALLOWED">

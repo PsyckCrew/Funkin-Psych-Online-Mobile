@@ -6,8 +6,8 @@ import haxe.Exception;
 import haxe.Json;
 
 #if sys
-import sys.io.File;
-import sys.FileSystem;
+import backend.io.File;
+import backend.io.FileSystem;
 #end
 
 #if LUA_ALLOWED

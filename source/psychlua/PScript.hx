@@ -6,8 +6,8 @@ import haxe.ds.ObjectMap;
 import haxe.ds.EnumValueMap;
 import haxe.Constraints.IMap;
 import haxe.Exception;
-import sys.io.File;
-import sys.FileSystem;
+import backend.io.File;
+import backend.io.FileSystem;
 
 #if HSCRIPT_ALLOWED
 import hscript.*;

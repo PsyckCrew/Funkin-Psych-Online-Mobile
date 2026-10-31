@@ -3,7 +3,7 @@ package states.editors;
 import backend.WeekData;
 
 #if MODS_ALLOWED
-import sys.FileSystem;
+import backend.io.FileSystem;
 #end
 
 import objects.Character;

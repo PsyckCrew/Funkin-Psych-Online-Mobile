@@ -8,8 +8,8 @@ import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.util.FlxSort;
 import flixel.util.FlxDestroyUtil;
 #if MODS_ALLOWED
-import sys.io.File;
-import sys.FileSystem;
+import backend.io.File;
+import backend.io.FileSystem;
 #end
 import openfl.utils.AssetType;
 import openfl.utils.Assets;

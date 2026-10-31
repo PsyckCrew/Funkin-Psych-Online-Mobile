@@ -335,7 +335,7 @@ class Note extends FlxSprite
 			alpha = ClientPrefs.data.holdAlpha;
 			multAlpha = ClientPrefs.data.holdAlpha;
 			hitsoundDisabled = true;
-			if(ClientPrefs.data.downScroll) flipY = true;
+			if(PlayState.isDownScroll()) flipY = true;
 
 			offsetX += width / 2;
 			copyAngle = false;

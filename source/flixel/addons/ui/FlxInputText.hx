@@ -243,6 +243,10 @@ class FlxInputText extends FlxText
 	override public function destroy():Void
 	{
 		FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+		#if mobile
+		if (hasFocus)
+			hasFocus = false;
+		#end
 
 		backgroundSprite = FlxDestroyUtil.destroy(backgroundSprite);
 		fieldBorderSprite = FlxDestroyUtil.destroy(fieldBorderSprite);
@@ -465,6 +469,9 @@ class FlxInputText extends FlxText
 				{
 					return;
 				}
+				#if mobile
+				return;
+				#end
 				var newText:String = filter(String.fromCharCode(e.charCode));
 
 				if (newText.length > 0 && (maxLength == 0 || (text.length + newText.length) < maxLength))
@@ -476,6 +483,21 @@ class FlxInputText extends FlxText
 			}
 		}
 	}
+
+	#if mobile
+	private function onTextInput(input:String):Void
+	{
+		if (!hasFocus)
+			return;
+		var newText:String = filter(input);
+		if (newText.length > 0 && (maxLength == 0 || (text.length + newText.length) < maxLength))
+		{
+			text = insertSubstring(text, newText, caretIndex);
+			caretIndex += newText.length;
+			onChange(INPUT_ACTION);
+		}
+	}
+	#end
 
 	private function onChange(action:String):Void
 	{
@@ -876,6 +898,16 @@ class FlxInputText extends FlxText
 
 	private function set_hasFocus(newFocus:Bool):Bool
 	{
+		#if mobile
+		if (newFocus != hasFocus && FlxG.stage.window != null)
+		{
+			FlxG.stage.window.textInputEnabled = newFocus;
+			if (newFocus)
+				FlxG.stage.window.onTextInput.add(onTextInput);
+			else
+				FlxG.stage.window.onTextInput.remove(onTextInput);
+		}
+		#end
 		if (newFocus)
 		{
 			if (hasFocus != newFocus)

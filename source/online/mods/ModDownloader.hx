@@ -1,10 +1,10 @@
 package online.mods;
 
 import haxe.Exception;
-import sys.FileSystem;
+import backend.io.FileSystem;
 import online.mods.GameBanana;
 import online.http.HTTPClient;
-import sys.io.File;
+import backend.io.File;
 
 class ModDownloader {
 	public static var downloaders:Array<ModDownloader> = [];
@@ -21,7 +21,7 @@ class ModDownloader {
 	}
 	public var onStatus:DownloaderStatus->Void;
 
-	static var downloadDir:String = openfl.filesystem.File.applicationDirectory.nativePath + "/downloads/";
+	static var downloadDir:String = #if mobile lime.system.System.applicationStorageDirectory + "downloads/" #else openfl.filesystem.File.applicationDirectory.nativePath + "/downloads/" #end;
 	var downloadPath:String;
 	var id:String;
 	public var url:String;

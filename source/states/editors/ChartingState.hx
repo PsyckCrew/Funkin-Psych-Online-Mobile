@@ -42,8 +42,8 @@ import substates.Prompt;
 
 #if sys
 import openfl.media.Sound;
-import sys.FileSystem;
-import sys.io.File;
+import backend.io.FileSystem;
+import backend.io.File;
 #end
 
 @:access(flixel.sound.FlxSound._sound)

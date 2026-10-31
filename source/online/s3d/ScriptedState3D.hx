@@ -11,8 +11,8 @@ import away3d.containers.ObjectContainer3D;
 import flixel.input.keyboard.FlxKey;
 import flixel.FlxState;
 import psychlua.PScript;
-import sys.io.File;
-import sys.FileSystem;
+import backend.io.File;
+import backend.io.FileSystem;
 import away3d.cameras.lenses.PerspectiveLens;
 import flx3d.FlxState3D;
 
