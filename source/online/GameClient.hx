@@ -567,7 +567,7 @@ class GameClient {
 				result(new Error(0, error), null);
 			}
 
-			http.request();
+			try http.request() catch (e) http.onError(Std.string(e));
 		});
 	}
 
@@ -592,7 +592,7 @@ class GameClient {
 					});
 			}
 
-			http.request();
+			try http.request() catch (e) http.onError(Std.string(e));
 		}, _ -> {});
 	}
 
@@ -734,7 +734,7 @@ class GameClient {
 			Log.errorTrace('$error');
 			hasAddresses = false;
 		}
-		http.request();
+		try http.request() catch (e) http.onError(Std.string(e));
 		#if LOCAL
 		GameClient.serverAddresses.insert(0, "ws://localhost:2567");
 		#else

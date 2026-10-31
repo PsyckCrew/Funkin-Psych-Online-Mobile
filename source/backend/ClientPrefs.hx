@@ -21,9 +21,6 @@ enum abstract InputType(Int) from Int from UInt to Int to UInt
 
 // Add a variable here and it will get automatically saved
 class SaveVariables {
-  #if android
-  public var storageType:String = 'EXTERNAL';
-  #end
 	public var downScroll:Bool = false;
 	public var middleScroll:Bool = false;
 	public var opponentStrums:Bool = true;

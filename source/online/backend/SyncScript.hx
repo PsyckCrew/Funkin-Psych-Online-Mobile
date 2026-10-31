@@ -52,7 +52,7 @@ class SyncScript extends psychlua.PScript {
 				http.onError = function(error) {
 					Log.errorTrace(error);
 				}
-			http.request();
+			try http.request() catch (e) http.onError(Std.string(e));
 			return http.responseData;
 		}
 	}
