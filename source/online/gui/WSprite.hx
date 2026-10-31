@@ -9,9 +9,10 @@ class WSprite extends Sprite {
     public function new() {
         super();
 
-		_windowWidth = Lib.application.window.width;
-		_windowHeight = Lib.application.window.height;
+		_windowWidth = Util.screenWidth;
+		_windowHeight = Util.screenHeight;
 
+        #if !mobile
         Lib.application.window.onResize.add((w, h) -> {
 			final scale = Math.min(w / _windowWidth, h / _windowHeight);
 			scaleX = scale;
@@ -19,5 +20,6 @@ class WSprite extends Sprite {
 			x = w / 2 - _windowWidth * scale / 2;
 			y = h / 2 - _windowHeight * scale / 2;
         });
+        #end
     }
 }

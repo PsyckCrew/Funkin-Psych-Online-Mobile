@@ -7,6 +7,14 @@ import openfl.display.DisplayObject;
 
 @:publicFields
 class Util {
+	static var screenWidth(get, never):Int;
+	static function get_screenWidth():Int
+		return #if mobile 1280 #else openfl.Lib.application.window.width #end;
+
+	static var screenHeight(get, never):Int;
+	static function get_screenHeight():Int
+		return #if mobile 720 #else openfl.Lib.application.window.height #end;
+
 	static function checkKey(key:Int, keyID:String):Bool {
 		for (k in ClientPrefs.keyBinds.get(keyID)) {
 			if (key == k)

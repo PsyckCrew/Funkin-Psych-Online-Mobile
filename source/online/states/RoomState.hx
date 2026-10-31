@@ -870,6 +870,9 @@ class RoomState extends MusicBeatState /*#if interpret implements interpret.Inte
 				}
 			}
 		}
+		else if (FlxG.mouse.justPressed && FlxG.mouse.overlaps(chatIconBg, camHUD)) {
+			chatBox.focused = false;
+		}
 
 		if (FlxG.sound.music != null)
 			Conductor.songPosition = FlxG.sound.music.time;

@@ -90,16 +90,16 @@ class SideUI extends WSprite {
 		mouseEnabled = false;
 		mouseChildren = false;
 
-		var bg = new Bitmap(new BitmapData(Lib.application.window.width, Lib.application.window.height, true, 0x8E000000));
+		var bg = new Bitmap(new BitmapData(Util.screenWidth, Util.screenHeight, true, 0x8E000000));
 		addChild(bg);
 
 		tabUI = new Sprite();
 		addChild(tabUI);
 
-		leftBar = new Bitmap(new BitmapData(50, Lib.application.window.height, true, FlxColor.fromRGB(30, 30, 30)));
+		leftBar = new Bitmap(new BitmapData(50, Util.screenHeight, true, FlxColor.fromRGB(30, 30, 30)));
 		tabUI.addChild(leftBar);
 		
-		upBar = new Bitmap(new BitmapData(Lib.application.window.width, 50, true, FlxColor.BLACK));
+		upBar = new Bitmap(new BitmapData(Util.screenWidth, 50, true, FlxColor.BLACK));
 		addChild(upBar);
 
 		welcome = this.createText(15, 15, 20);
@@ -123,8 +123,8 @@ class SideUI extends WSprite {
 			var daTab = Type.createInstance(tabClass, []);
 			daTab.x = leftBar.width;
 			daTab.y = upBar.height;
-			daTab.widthSpace = Std.int(Lib.application.window.width - daTab.x);
-			daTab.heightSpace = Std.int(Lib.application.window.height - daTab.y);
+			daTab.widthSpace = Std.int(Util.screenWidth - daTab.x);
+			daTab.heightSpace = Std.int(Util.screenHeight - daTab.y);
 			tabs.push(daTab);
 			
 			var tabIconUnderlay = new Bitmap(new BitmapData(50, 50, true, FlxColor.fromRGB(100, 100, 100)));

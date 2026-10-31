@@ -172,14 +172,14 @@ class Alert extends Sprite {
 	override function __enterFrame(delta) {
 		super.__enterFrame(delta);
 
-		_lastY = Lib.application.window.height - 10;
+		_lastY = Util.screenHeight - 10;
 		for (child in __children) {
 			if (!(child is AlertMessage)) {
 				continue;
 			}
 
 			var msg:AlertMessage = cast child; 
-			msg.x = Lib.application.window.width - msg.bg.scaleX - 10;
+			msg.x = Util.screenWidth - msg.bg.scaleX - 10;
 			_lastY -= msg.bg.scaleY;
 			msg.y = _lastY;
 			_lastY -= 10;

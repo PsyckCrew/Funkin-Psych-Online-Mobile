@@ -86,7 +86,7 @@ class DownloadAlerts extends Sprite {
 				alert.bg.y = prevAlert.bg.y + prevAlert.bg.height + 10;
 			else
 				alert.bg.y = 0;
-			alert.bg.x = Lib.application.window.width - alert.bg.width;
+			alert.bg.x = Util.screenWidth - alert.bg.width;
 			alert.text.x = alert.bg.x + 10;
 			alert.text.y = alert.bg.y;
 

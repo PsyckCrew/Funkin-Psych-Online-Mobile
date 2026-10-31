@@ -1438,7 +1438,7 @@ class PlayState extends MusicBeatState
 
 		if (GameClient.isConnected()) {
 			preloadTasks.push(() -> {
-				waitReadySpr = new Alphabet(0, 0, "PRESS ACCEPT TO START", true);
+				waitReadySpr = new Alphabet(0, 0, MobileUtil.enabled ? "TAP TO START" : "PRESS ACCEPT TO START", true);
 				waitReadySpr.cameras = [camOther];
 				waitReadySpr.alignment = CENTERED;
 				waitReadySpr.x = FlxG.width / 2;
@@ -3481,7 +3481,7 @@ class PlayState extends MusicBeatState
 			// 	endSong();
 			// }
 
-			if (!isReady && controls.ACCEPT && !inCutscene && canStart && canInput) {
+			if (!isReady && (controls.ACCEPT || (MobileUtil.enabled && FlxG.mouse.justPressed)) && !inCutscene && canStart && canInput) {
 				isReady = true;
 				FlxG.sound.play(Paths.sound('confirmMenu'), 0.5);
 				if (ClientPrefs.data.flashing)

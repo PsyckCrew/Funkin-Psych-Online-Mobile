@@ -41,6 +41,7 @@ class SaveVariables {
 	public var hitboxStyle:String = 'Classic';
 	public var vibration:String = 'Off';
 	public var vibrationStrength:Float = 1;
+	public var invertScroll:Bool = false;
 	public var camZooms:Bool = true;
 	public var hideHud:Bool = false;
 	public var noteOffset:Int = 0;

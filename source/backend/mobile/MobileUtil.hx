@@ -249,7 +249,7 @@ class MobileUtil implements IFlxInputManager
 				var dy = t.screenY - dragAnchorY;
 				if (Math.abs(t.screenX - dragStartX) < Math.abs(t.screenY - dragStartY) * 2 && Math.abs(dy) >= dragStep)
 				{
-					pulse(dy < 0 ? 'ui_up' : 'ui_down');
+					pulse((dy < 0) != ClientPrefs.data.invertScroll ? 'ui_up' : 'ui_down');
 					dragAnchorY += dy < 0 ? -dragStep : dragStep;
 					dragStepped = true;
 				}
@@ -303,6 +303,23 @@ class MobileUtil implements IFlxInputManager
 		if (w <= 0 || h <= 0)
 			return;
 		FlxG.scaleMode.onMeasure(w, h);
+
+		var scale = FlxG.scaleMode.scale, offset = FlxG.scaleMode.offset;
+		FlxG.game.scrollRect = new openfl.geom.Rectangle(0, 0, FlxG.width * scale.x, FlxG.height * scale.y);
+		var main = FlxG.game.parent;
+		for (layer in [openfl.Lib.current, main])
+		{
+			for (i in 0...layer.numChildren)
+			{
+				var overlay = layer.getChildAt(i);
+				if (overlay == main || overlay == FlxG.game)
+					continue;
+				overlay.x = offset.x;
+				overlay.y = offset.y;
+				overlay.scaleX = scale.x;
+				overlay.scaleY = scale.y;
+			}
+		}
 		Log.info('[MobileUtil] stage=${w}x${h} game=${FlxG.width}x${FlxG.height} scale=${FlxG.scaleMode.scale.x},${FlxG.scaleMode.scale.y} offset=${FlxG.scaleMode.offset.x},${FlxG.scaleMode.offset.y}');
 	}
 	#end

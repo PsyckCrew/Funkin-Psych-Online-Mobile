@@ -27,6 +27,12 @@ V-Slice: a row of big arrow buttons at the bottom.',
 			['Classic', 'V-Slice']);
 		addOption(option);
 
+		var option:Option = new Option('Invert Scroll',
+			'If checked, dragging a finger up scrolls menus down instead of up.',
+			'invertScroll',
+			'bool');
+		addOption(option);
+
 		var option:Option = new Option('Vibration:',
 			'Vibrate the phone when you miss a note, hit a note, or both.',
 			'vibration',

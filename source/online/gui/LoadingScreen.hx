@@ -23,8 +23,8 @@ class LoadingScreen extends Sprite {
     public static function toggle(v:Bool) {
 		loading = v;
         instance.targetAlpha = v ? 1 : 0;
-		instance.bg.scaleX = Lib.application.window.width;
-		instance.bg.scaleY = Lib.application.window.height;
+		instance.bg.scaleX = Util.screenWidth;
+		instance.bg.scaleY = Util.screenHeight;
     }
     
 	public function new() {
@@ -38,8 +38,8 @@ class LoadingScreen extends Sprite {
 		mouseChildren = false;
 
 		bg = new Bitmap(new BitmapData(1, 1, true, 0xFF000000));
-		bg.scaleX = Lib.application.window.width;
-		bg.scaleY = Lib.application.window.height;
+		bg.scaleX = Util.screenWidth;
+		bg.scaleY = Util.screenHeight;
 		bg.alpha = 0.6;
 		addChild(bg);
 
@@ -110,8 +110,8 @@ class LoadingScreen extends Sprite {
 		roseCirc.graphics.clear();
 		roseCirc.graphics.beginFill(0xFCFCFC);
 		roseCirc.graphics.drawCircle(
-            Lib.application.window.width / 2 + thetaSin * Math.cos(thetaAngle(0)), 
-			Lib.application.window.height / 2 + thetaSin * Math.sin(thetaAngle(0)), 
+            Util.screenWidth / 2 + thetaSin * Math.cos(thetaAngle(0)), 
+			Util.screenHeight / 2 + thetaSin * Math.sin(thetaAngle(0)), 
             5
         );
 		roseCirc.graphics.endFill();
@@ -120,8 +120,8 @@ class LoadingScreen extends Sprite {
 		roseCirc1.graphics.clear();
 		roseCirc1.graphics.beginFill(0xFCFCFC);
 		roseCirc1.graphics.drawCircle(
-            Lib.application.window.width / 2 + thetaCos * Math.sin(thetaAngle(2)), 
-			Lib.application.window.height / 2 + thetaCos * Math.cos(thetaAngle(2)), 
+            Util.screenWidth / 2 + thetaCos * Math.sin(thetaAngle(2)), 
+			Util.screenHeight / 2 + thetaCos * Math.cos(thetaAngle(2)), 
             5
         );
 		roseCirc1.graphics.endFill();
@@ -129,8 +129,8 @@ class LoadingScreen extends Sprite {
         roseCirc2.graphics.clear();
 		roseCirc2.graphics.beginFill(0xFCFCFC);
 		roseCirc2.graphics.drawCircle(
-            Lib.application.window.width / 2 + thetaSin2 * Math.sin(thetaAngle(1)), 
-			Lib.application.window.height / 2 + thetaSin2 * Math.cos(thetaAngle(1)), 
+            Util.screenWidth / 2 + thetaSin2 * Math.sin(thetaAngle(1)), 
+			Util.screenHeight / 2 + thetaSin2 * Math.cos(thetaAngle(1)), 
             5
         );
 		roseCirc2.graphics.endFill();
@@ -138,8 +138,8 @@ class LoadingScreen extends Sprite {
         roseCirc3.graphics.clear();
 		roseCirc3.graphics.beginFill(0xFCFCFC);
 		roseCirc3.graphics.drawCircle(
-            Lib.application.window.width / 2 + thetaCos2 * Math.cos(thetaAngle(3)), 
-			Lib.application.window.height / 2 + thetaCos2 * Math.sin(thetaAngle(3)), 
+            Util.screenWidth / 2 + thetaCos2 * Math.cos(thetaAngle(3)), 
+			Util.screenHeight / 2 + thetaCos2 * Math.sin(thetaAngle(3)), 
             5
         );
 		roseCirc3.graphics.endFill();

@@ -323,6 +323,9 @@ class OnlineState extends MusicBeatState {
 		changeSelection(0);
 
 		FlxG.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+		#if mobile
+		FlxG.stage.window.onTextInput.add(onTextInput);
+		#end
 
 		FlxG.mouse.visible = true;
     }
@@ -331,7 +334,18 @@ class OnlineState extends MusicBeatState {
 		super.destroy();
 
 		FlxG.stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+		#if mobile
+		FlxG.stage.window.onTextInput.remove(onTextInput);
+		FlxG.stage.window.textInputEnabled = false;
+		#end
 	}
+
+	#if mobile
+	function onTextInput(text:String) {
+		if (inputWait)
+			inputString += curSelected == 0 ? text.toUpperCase() : text;
+	}
+	#end
 
     override function update(elapsed) {
         super.update(elapsed);
@@ -349,6 +363,16 @@ class OnlineState extends MusicBeatState {
 		}
 
 		var mouseInItems = FlxG.mouse.y > items.y && FlxG.mouse.y < items.y + items.members.length * 40;
+
+		#if mobile
+		if (FlxG.stage.window.textInputEnabled != inputWait)
+			FlxG.stage.window.textInputEnabled = inputWait;
+		if (inputWait && FlxG.keys.justPressed.ESCAPE) {
+			inputWait = false;
+			tempDisableInput();
+			return;
+		}
+		#end
 
 		if (FlxG.mouse.justPressed && inputWait) {
 			if (!FlxG.mouse.overlaps(items.members[curSelected])) {
@@ -565,6 +589,10 @@ class OnlineState extends MusicBeatState {
 			tempDisableInput();
             return;
         }
+
+		#if mobile
+		return;
+		#end
 
 		var newText:String = String.fromCharCode(e.charCode);
 		if ((curSelected == 0 && !e.shiftKey) || (curSelected != 0 && e.shiftKey)) {
