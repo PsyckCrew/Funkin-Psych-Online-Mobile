@@ -160,7 +160,7 @@ class Mods
 		try {
 			final toSortModList:Array<Dynamic> = sortByPriority ? [] : null;
 
-			for (mod in CoolUtil.coolTextFile('modsList.txt'))
+			for (mod in CoolUtil.coolTextFile(#if mobile StorageUtil.getDirectory() + #end 'modsList.txt'))
 			{
 				//Log.info('Mod: $mod');
 				if(mod.trim().length < 1) continue;
@@ -249,7 +249,7 @@ class Mods
 		var list:Array<Array<Dynamic>> = [];
 		var added:Array<String> = [];
 		try {
-			for (mod in CoolUtil.coolTextFile('modsList.txt'))
+			for (mod in CoolUtil.coolTextFile(#if mobile StorageUtil.getDirectory() + #end 'modsList.txt'))
 			{
 				var dat:Array<String> = mod.split("|");
 				var folder:String = dat[0];
@@ -283,7 +283,7 @@ class Mods
 			fileStr += values[0] + '|' + (values[1] ? '1' : '0');
 		}
 
-		File.saveContent('modsList.txt', fileStr);
+		File.saveContent(#if mobile StorageUtil.getDirectory() + #end 'modsList.txt', fileStr);
 		updatedOnState = true;
 		//Log.info('Saved modsList.txt');
 		#end
