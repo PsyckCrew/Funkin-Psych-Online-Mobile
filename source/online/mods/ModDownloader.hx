@@ -21,7 +21,7 @@ class ModDownloader {
 	}
 	public var onStatus:DownloaderStatus->Void;
 
-	static var downloadDir:String = #if mobile lime.system.System.applicationStorageDirectory + "downloads/" #else openfl.filesystem.File.applicationDirectory.nativePath + "/downloads/" #end;
+	static var downloadDir:String = #if mobile StorageUtil.getDirectory() + "downloads/" #else openfl.filesystem.File.applicationDirectory.nativePath + "/downloads/" #end;
 	var downloadPath:String;
 	var id:String;
 	public var url:String;
