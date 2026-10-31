@@ -68,7 +68,7 @@ class StorageUtil
 	public static function initDirectory():String {
 		var daPath:String = '';
 		if (!FileSystem.exists(getStorageTypePath()))
-			File.saveContent(getStorageTypePath(), Options.storageType);
+			File.saveContent(getStorageTypePath(), ClientPrefs.data.storageType);
 
 		var curStorageType:String = File.getContent(getStorageTypePath());
 
