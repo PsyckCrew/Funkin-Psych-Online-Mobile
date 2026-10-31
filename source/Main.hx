@@ -95,7 +95,12 @@ class Main extends Sprite
 		#end
 
 		#if mobile
-		Sys.setCwd(lime.system.System.applicationStorageDirectory);
+		#if android
+		StorageUtil.getPermissions();
+		StorageUtil.initDirectory();
+		#end
+		Sys.setCwd(StorageUtil.getAssetDirectory());
+		StorageUtil.copyAssets();
 		#else
 		if (Path.normalize(Sys.getCwd()) != Path.normalize(lime.system.System.applicationDirectory)) {
 			Sys.setCwd(lime.system.System.applicationDirectory);
